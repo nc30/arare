@@ -32,9 +32,6 @@ if __name__ == '__main__':
     from logging import StreamHandler
     logger.addHandler(StreamHandler(stream=sys.stdout))
 
-    client.connect(60)
-    client.subscribe('$aws/things/'+THING_NAME+'/shadow/update/delta', 1, cb)
-
     client = AWSIoTMQTTClient(THING_NAME)
     client.configureEndpoint(ENDPOINT, 8883)
     client.configureCredentials(ROOTCA, PRIVATE, CERT)
@@ -44,6 +41,9 @@ if __name__ == '__main__':
     client.configureDrainingFrequency(2)
     client.configureConnectDisconnectTimeout(300)
     client.configureMQTTOperationTimeout(5)
+
+    client.connect(60)
+    client.subscribe('$aws/things/'+THING_NAME+'/shadow/update/delta', 1, cb)
 
 
     while True:
