@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding: utf-8
 
 
 from logging import getLogger
@@ -40,10 +41,10 @@ if __name__ == '__main__':
     client.configureOfflinePublishQueueing(-1)
     client.configureDrainingFrequency(2)
     client.configureConnectDisconnectTimeout(300)
-    client.configureMQTTOperationTimeout(5)
+    client.configureMQTTOperationTimeout(10)
 
-    client.connect(60)
     client.subscribe('$aws/things/'+THING_NAME+'/shadow/update/delta', 1, cb)
+    client.connect(60)
 
 
     while True:
@@ -53,7 +54,8 @@ if __name__ == '__main__':
             shadow = {
                 "state": {
                     "reported": {
-                        "date": time.time() 
+                        "date": time.time(),
+                        "check_span": CHECK_SPAN
                     }
                 }
             }
