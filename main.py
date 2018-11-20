@@ -28,34 +28,33 @@ client.configureDrainingFrequency(2)
 client.configureConnectDisconnectTimeout(300)
 client.configureMQTTOperationTimeout(5)
 
-client.connect(250)
-
+client.connect(60)
 
 while True:
-    while True:
-
-        try:
-
-            # Shadowアップデートに必要な構造の作成
-            # https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/device-shadow-mqtt.html#update-pub-sub-topic
-            shadow = {
-                "state": {
-                    "reported": {
-                        "date": time.time() 
-                    }
+    try:
+        # Shadowアップデートに必要な構造の作成
+        # https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/device-shadow-mqtt.html#update-pub-sub-topic
+        shadow = {
+            "state": {
+                "reported": {
+                    "date": time.time() 
                 }
             }
+        }
 
 
-            # Shadowのアップデートを行う
-            # jsonについてはこちら
-            # https://docs.python.jp/3/library/json.html
-            client.publish('$aws/things/'+THING_NAME+'/shadow/update', json.dumps(shadow), 1)
+        # Shadowのアップデートを行う
+        # jsonについてはこちら
+        # https://docs.python.jp/3/library/json.html
+        client.publish('$aws/things/'+THING_NAME+'/shadow/update', json.dumps(shadow), 1)
 
-        except IOError:
-            # this is connection error to enviro phat
-            time.sleep(CHECK_SPAN)
-            continue
+    except IOError:
+        # this is connection error to enviro phat
+        time.sleep(CHECK_SPAN)
+        continue
 
-        except Exception as e:
-            logger.exception(e)
+    except Exception as e:
+        logger.exception(e)
+
+    print(time.time())
+    time.sleep(CHECK_SPAN)
