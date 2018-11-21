@@ -31,7 +31,7 @@ def cb(client, userdata, message):
 
 if __name__ == '__main__':
     from logging import StreamHandler, DEBUG
-    logger.seLevel(DEBUG)
+    logger.setLevel(DEBUG)
     logger.addHandler(StreamHandler(stream=sys.stdout))
 
     client = AWSIoTMQTTClient(THING_NAME)
