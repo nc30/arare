@@ -54,7 +54,7 @@ if __name__ == '__main__':
     d.start()
 
     from arare import dashscan
-    d = threading.Thread(target=door.main, kwargs={"client": client}, daemon=True)
+    d = threading.Thread(target=dashscan.main, kwargs={"client": client}, daemon=True)
     d.start()
 
     while True:

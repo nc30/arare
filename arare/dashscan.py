@@ -43,4 +43,6 @@ def main(client):
                         client.publish(TOPIC, arp_mac, 1)
                     break
 
+    logger.debug('start')
     sniff(prn=arp_monitorCB, filter="arp", store=0)
+    logger.debug('end')
