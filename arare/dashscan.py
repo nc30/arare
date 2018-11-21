@@ -13,6 +13,10 @@ MACS = {
     '00:fc:8b:3d:31:dc': {
         'name': 'wanda'
     },
+    'fc:65:de:83:dc:31': {
+        'name': 'wanda'
+    },
+
 }
 
 import time
