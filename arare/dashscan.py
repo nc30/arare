@@ -37,7 +37,7 @@ def main(client):
     def arp_monitorCB(packet):
         if ARP in packet and packet[ARP].op in (1,2):
             arp_mac = packet.sprintf("%ARP.hwsrc%")
-            logger.debug('get arp packet %s', arp_mac)
+            #logger.debug('get arp packet %s', arp_mac)
             for mac, val in MACS.items():
                 if mac == arp_mac:
                     # logger.debug('hit %s (%s)', val['name'], mac)
