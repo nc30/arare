@@ -30,6 +30,5 @@ def main(client):
                 }
                 client.publish(TOPIC, json.dumps(param), 0)
 
-        finally:
-            logger.info('stop')
-            serial.close()
+        except Exception as e:
+            logger.exception(e)

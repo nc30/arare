@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-
 from logging import getLogger
-logger = getLogger(__name__)
+logger = getLogger('arare')
+
 
 import time
 import datetime
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     import threading
     from arare import door
 
-    d = threading.Thread(target=door.main, args=(client), daemon=True)
+    d = threading.Thread(target=door.main, kwargs={"client": client}, daemon=True)
     d.start()
 
     while True:
