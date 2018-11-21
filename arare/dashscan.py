@@ -5,6 +5,7 @@ logger = getLogger(__name__)
 
 
 from scapy.all import sniff, ARP
+import json
 
 TOPIC = 'stat/arare/dash'
 
@@ -41,9 +42,12 @@ def main(client):
                         logger.debug('ttl disable. skip')
                         break
 
-                        client.publish(TOPIC, arp_mac, 1)
+                        param = {
+                            'mac': arp_mac,
+                            'time': time.time(),
+                            'name': val['name']
+                        }
+                        client.publish(TOPIC, json.dumps(param), 1)
                     break
 
-    logger.debug('start')
     sniff(prn=arp_monitorCB, filter="arp", store=0)
-    logger.debug('end')
