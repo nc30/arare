@@ -36,7 +36,7 @@ def main(client):
             logger.debug('get arp packet %s', arp_mac)
             for mac, val in MACS.items():
                 if mac == arp_mac:
-                    logger.info('hit %s (%s)', val['name'], mac)
+                    # logger.debug('hit %s (%s)', val['name'], mac)
 
                     if not is_locked(mac, True):
                         logger.debug('ttl disable. skip')
