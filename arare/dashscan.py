@@ -3,6 +3,7 @@
 from logging import getLogger
 logger = getLogger(__name__)
 
+
 from scapy.all import sniff, ARP
 
 TOPIC = 'stat/arare/dash'
@@ -32,7 +33,7 @@ def main(client):
         if ARP in packet and packet[ARP].op in (1,2):
             arp_mac = packet.sprintf("%ARP.hwsrc%")
             logger.debug('get arp packet %s', arp_mac)
-            for mac, val in macs.items():
+            for mac, val in MACS.items():
                 if mac == arp_mac:
                     logger.info('hit %s (%s)', val['name'], mac)
 
