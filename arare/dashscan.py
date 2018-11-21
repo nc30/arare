@@ -46,12 +46,12 @@ def main(client):
                         logger.debug('ttl disable. skip')
                         break
 
-                        param = {
-                            'mac': arp_mac,
-                            'time': time.time(),
-                            'name': val['name']
-                        }
-                        client.publish(TOPIC, json.dumps(param), 1)
+                    param = {
+                        'mac': arp_mac,
+                        'time': time.time(),
+                        'name': val['name']
+                    }
+                    client.publish(TOPIC, json.dumps(param), 1)
                     break
 
     sniff(prn=arp_monitorCB, filter="arp", store=0)
