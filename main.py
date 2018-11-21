@@ -46,11 +46,14 @@ if __name__ == '__main__':
     client.subscribe('$aws/things/'+THING_NAME+'/shadow/update/delta', 1, cb)
     client.connect(60)
 
+    import threading
+    from arare import door
+
+    d = threading.Thread(target=door.main, args=(client), daemon=True)
+    d.start()
 
     while True:
         try:
-            # Shadowアップデートに必要な構造の作成
-            # https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/device-shadow-mqtt.html#update-pub-sub-topic
             shadow = {
                 "state": {
                     "reported": {
@@ -61,9 +64,6 @@ if __name__ == '__main__':
             }
 
 
-            # Shadowのアップデートを行う
-            # jsonについてはこちら
-            # https://docs.python.jp/3/library/json.html
             client.publish('$aws/things/'+THING_NAME+'/shadow/update', json.dumps(shadow), 1)
 
         except IOError:
