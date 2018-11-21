@@ -30,7 +30,8 @@ def cb(client, userdata, message):
         pass
 
 if __name__ == '__main__':
-    from logging import StreamHandler
+    from logging import StreamHandler, DEBUG
+    logger.seLevel(DEBUG)
     logger.addHandler(StreamHandler(stream=sys.stdout))
 
     client = AWSIoTMQTTClient(THING_NAME)
@@ -49,6 +50,10 @@ if __name__ == '__main__':
     import threading
     from arare import door
 
+    d = threading.Thread(target=door.main, kwargs={"client": client}, daemon=True)
+    d.start()
+
+    from arare import dashscan
     d = threading.Thread(target=door.main, kwargs={"client": client}, daemon=True)
     d.start()
 
@@ -74,5 +79,4 @@ if __name__ == '__main__':
         except Exception as e:
             logger.exception(e)
 
-        logger.debug(time.time())
         time.sleep(CHECK_SPAN)
