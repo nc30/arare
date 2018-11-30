@@ -11,6 +11,7 @@ import os
 import sys
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import json
+import subprocess
 
 CHECK_SPAN = 10
 THING_NAME = 'arare'
@@ -29,6 +30,11 @@ def cb(client, userdata, message):
     except KeyError:
         pass
 
+def soundPlay(client, userdata, message):
+    sound = message.payload.decode('utf-8')
+    subprocess.call(['aplay', '/home/hirose/'+sound])
+    
+    
 if __name__ == '__main__':
     from logging import StreamHandler, DEBUG
     logger.setLevel(DEBUG)
@@ -45,6 +51,8 @@ if __name__ == '__main__':
     client.configureMQTTOperationTimeout(10)
 
     client.subscribe('$aws/things/'+THING_NAME+'/shadow/update/delta', 1, cb)
+    client.subscribe('cmnd/'+THING_NAME+'/soundPlay', 1, cb)
+
     client.connect(60)
 
     import threading
