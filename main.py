@@ -51,7 +51,7 @@ if __name__ == '__main__':
     client.configureMQTTOperationTimeout(10)
 
     client.subscribe('$aws/things/'+THING_NAME+'/shadow/update/delta', 1, cb)
-    client.subscribe('cmnd/'+THING_NAME+'/soundPlay', 1, cb)
+    client.subscribe('cmnd/'+THING_NAME+'/soundPlay', 1, soundPlay)
 
     client.connect(60)
 
